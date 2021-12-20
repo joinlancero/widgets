@@ -158,13 +158,13 @@ submit.addEventListener('click', async e => {
       }),
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${pk.pk_lancero}`},
     });
-    console.log(res.status);
     if (res.status === 200) {
       feedback.innerHTML = 'Added you to the waitlist';
       feedback.classList.add('success');
       feedback.classList.remove('error');
       feedback.style.visibility = 'visible';
     } else {
+      console.error(res.error())
       feedback.innerHTML = 'Could not add you to the waitlist';
       feedback.classList.add('error');
       feedback.classList.remove('success');
