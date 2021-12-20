@@ -134,7 +134,7 @@ widget.innerHTML = `
 <h1 id="lancero-title">Claim your code</h1>
 <label id="lancero-email-label" class="lancero-label" for="email">Email</label>
 <input id="lancero-email-input" class="lancero-input" name="email" type="email" placeholder="Your email" autocomplete="off"/>
-<label id="lancero-code-label" class="lancero-label"  for="code">Email</label>
+<label id="lancero-code-label" class="lancero-label"  for="code">Code</label>
 <input id="lancero-code-input" class="lancero-input" name="code" type="text" placeholder="Your code" autocomplete="off"/>
 <p id="lancero-feedback" style="visibility: hidden;"></p>
 <button id="lancero-button">Claim code</button>
