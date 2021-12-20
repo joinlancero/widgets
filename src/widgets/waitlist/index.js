@@ -164,7 +164,6 @@ submit.addEventListener('click', async e => {
       feedback.classList.remove('error');
       feedback.style.visibility = 'visible';
     } else {
-      console.error(`${res.status} - ${res.statusText}`)
       feedback.innerHTML = 'Could not add you to the waitlist';
       feedback.classList.add('error');
       feedback.classList.remove('success');
