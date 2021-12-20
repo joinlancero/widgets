@@ -1,5 +1,5 @@
 const styles = `
-    #lancero-waitlist-widget {
+    #lancero-claim-widget {
         tab-size: 4;
         -webkit-text-size-adjust: 100%;
         font-family: "Inter", sans-serif;
@@ -22,7 +22,7 @@ const styles = `
         width: 100%;
     }
 
-    #lancero-waitlist-widget #lancero-title {
+    #lancero-claim-widget #lancero-title {
         tab-size: 4;
         -webkit-text-size-adjust: 100%;
         font-family: inherit;
@@ -36,7 +36,7 @@ const styles = `
         font-weight: 700;
     }
 
-    #lancero-waitlist-widget #lancero-label {
+    #lancero-claim-widget .lancero-label {
         tab-size: 4;
         -webkit-text-size-adjust: 100%;
         font-family: inherit;
@@ -49,7 +49,7 @@ const styles = `
         font-weight: 300;
     }
 
-    #lancero-waitlist-widget #lancero-input {
+    #lancero-claim-widget .lancero-input {
         tab-size: 4;
         -webkit-text-size-adjust: 100%;
         -webkit-font-smoothing: antialiased;
@@ -73,7 +73,7 @@ const styles = `
         line-height: 1.25rem;
     }
 
-    #lancero-waitlist-widget #lancero-feedback {
+    #lancero-claim-widget #lancero-feedback {
         tab-size: 4;
         -webkit-text-size-adjust: 100%;
         font-family: inherit;
@@ -88,15 +88,15 @@ const styles = `
         height: auto;
     }
 
-    #lancero-waitlist-widget .error {
+    #lancero-claim-widget .error {
         color: rgba(239,68,68,1);
     }
 
-    #lancero-waitlist-widget .success {
+    #lancero-claim-widget .success {
         color: rgba(34,197,94,1);
     }
 
-    #lancero-waitlist-widget #lancero-button {
+    #lancero-claim-widget #lancero-button {
         tab-size: 4;
         -webkit-text-size-adjust: 100%;
         -webkit-font-smoothing: antialiased;
@@ -128,20 +128,23 @@ styleSheet.type = 'text/css';
 styleSheet.innerText = styles;
 document.head.appendChild(styleSheet);
 
-const widget = document.getElementById('lancero-waitlist-widget');
+const widget = document.getElementById('lancero-claim-widget');
 
 widget.innerHTML = `
-<h1 id="lancero-title">Sign up for the waitlist</h1>
-<label id="lancero-label" for="email">Email</label>
-<input id="lancero-input" name="email" type="email" placeholder="Your email" autocomplete="off"/>
+<h1 id="lancero-title">Claim your code</h1>
+<label id="lancero-email-label" class="lancero-label" for="email">Email</label>
+<input id="lancero-email-input" class="lancero-input" name="email" type="email" placeholder="Your email" autocomplete="off"/>
+<label id="lancero-code-label" class="lancero-label"  for="code">Email</label>
+<input id="lancero-code-input" class="lancero-input" name="code" type="text" placeholder="Your code" autocomplete="off"/>
 <p id="lancero-feedback" style="visibility: hidden;"></p>
-<button id="lancero-button">Sign up</button>
+<button id="lancero-button">Claim code</button>
 `;
 
 const me = document.querySelector('script[lancero-pk]');
 const pk = me.getAttribute('lancero-pk');
 
-const input = document.getElementById('lancero-input');
+const emailInput = document.getElementById('lancero-email-input');
+const codeInput = document.getElementById('lancero-code-input');
 const submit = document.getElementById('lancero-button');
 const feedback = document.getElementById('lancero-feedback');
 
@@ -149,22 +152,22 @@ submit.addEventListener('click', async e => {
   feedback.style.visibility = 'hidden';
 
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (input.value.match(regexEmail)) {
-    const res = await fetch('https://api.lancero.app/customers/create', {
+  if (emailInput.value.match(regexEmail)) {
+    const res = await fetch('https://api.lancero.app/codes/claim', {
       method: 'POST',
       body: JSON.stringify({
-        email: input.value,
-        waitlist: true,
+        email: emailInput.value,
+        code: codeInput.value,
       }),
       headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${pk.pk_lancero}`},
     });
     if (res.status === 200) {
-      feedback.innerHTML = 'Added you to the waitlist';
+      feedback.innerHTML = 'Claimed your code!';
       feedback.classList.add('success');
       feedback.classList.remove('error');
       feedback.style.visibility = 'visible';
     } else {
-      feedback.innerHTML = 'Could not add you to the waitlist';
+      feedback.innerHTML = res.statusText;
       feedback.classList.add('error');
       feedback.classList.remove('success');
       feedback.style.visibility = 'visible';
