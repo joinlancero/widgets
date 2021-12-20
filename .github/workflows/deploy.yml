@@ -1,9 +1,9 @@
-name: Upload widgets
+name: Upload src
 
 on:
   push:
     paths:
-      - 'widgets/**/*.js'
+      - 'src/**/*.js'
     branches:
       - main
 
@@ -22,4 +22,4 @@ jobs:
           aws-region: eu-west-3
 
       - name: Deploy static site to S3 bucket
-        run: aws s3 sync ./widgets/ s3://lancero --delete --exclude "*" --include "*.js"
+        run: aws s3 sync ./src/ s3://lancero --delete --exclude "*" --include "*.js"
