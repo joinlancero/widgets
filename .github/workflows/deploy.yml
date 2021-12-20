@@ -1,6 +1,11 @@
 name: Upload widgets
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'widgets/**/*.js'
+    branches:
+      - main
 
 jobs:
   deploy:
