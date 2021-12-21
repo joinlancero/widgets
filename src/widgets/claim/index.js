@@ -159,7 +159,7 @@ submit.addEventListener('click', async e => {
         email: emailInput.value,
         code: codeInput.value,
       }),
-      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${pk.pk_lancero}`},
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${pk}`},
     });
     if (res.status === 200) {
       feedback.innerHTML = 'Claimed your code!';

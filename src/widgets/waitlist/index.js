@@ -150,13 +150,13 @@ submit.addEventListener('click', async e => {
 
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (input.value.match(regexEmail)) {
-    const res = await fetch('https://api.lancero.app/customers/create', {
+    const res = await fetch('http://localhost:8080/customers/create', {
       method: 'POST',
       body: JSON.stringify({
         email: input.value,
         waitlist: true,
       }),
-      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${pk.pk_lancero}`},
+      headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${pk}`},
     });
     if (res.status === 200) {
       feedback.innerHTML = 'Added you to the waitlist';
