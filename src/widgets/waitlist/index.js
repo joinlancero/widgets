@@ -145,12 +145,32 @@ const input = document.getElementById('lancero-input');
 const submit = document.getElementById('lancero-button');
 const feedback = document.getElementById('lancero-feedback');
 
+const referrer = document.referrer;
+
+document.onreadystatechange = async () => {
+    if (document.readyState === 'complete') {
+        const userInfo = await fetch('http://ip-api.com/json').then(res => res.json())
+
+        if(!referrer.includes('localhost') && !referrer.includes('127.0.0.1')) {
+            await fetch('https://api.lancero.app/projects/addvisit', {
+                method: 'POST',
+                body: JSON.stringify({
+                    referredSite: referrer,
+                    ip: userInfo.query,
+                    country: userInfo.country,
+                }),
+                headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${pk}`},
+            })
+        }
+    }
+};
+
 submit.addEventListener('click', async e => {
   feedback.style.visibility = 'hidden';
 
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (input.value.match(regexEmail)) {
-    const res = await fetch('https://api.lancero.app/customers/create', {
+    const res = await fetch('http://api.lancero.app/leads/create', {
       method: 'POST',
       body: JSON.stringify({
         email: input.value,
