@@ -170,7 +170,7 @@ submit.addEventListener('click', async e => {
 
   let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (input.value.match(regexEmail)) {
-    const res = await fetch('http://api.lancero.app/leads/create', {
+    const res = await fetch('https://api.lancero.app/leads/create', {
       method: 'POST',
       body: JSON.stringify({
         email: input.value,
